@@ -1,0 +1,59 @@
+\begin{align*}
+  \mb{X}_0 &\sim N_k(\mb{0},\mb{I})\\
+  \mb{X}_{t+1} &= \mb{X}_t + \mb{\varepsilon_t} \quad , \mb{\varepsilon_t} \sim N_k(\mb{0},\mb{\Sigma}) \\
+  \mb{Y}_t &= \mb{X}_t + \mb{\eta_t} \quad , \mb{\eta_t} \sim N_k(\mb{0},\mathrm{diag}(\mb{\sigma}_Y^2) ) \\
+  \Sigma_{i,j} & = \rho^{|i-j|}\sigma_{i}\sigma_{j}  
+\end{align*} 
+States (random effects) $\mb{X}$, Observations $\mb{Y}$.  
+Parameters: $\mb{\sigma}, \mb{\sigma_Y}, \rho$ ($k+k+1$ parameters).
+
+\begin{figure}[h]
+  \centering
+<<echo=false,results=hide,fig=true>>=
+ans <- source("rw.R")$value
+@  
+  \caption{Simulation of $\mb{X}$ (lines) and $\mb{Y}$ (points) with $k=3$.}
+  \label{fig:1}
+\end{figure}
+
+TMB needs an implementation of the negative log of the joint density
+of random effects and data $l(\mb{X},\mb{Y})$. This is in general just as easy as writing
+a procedure to simulate from the full model.
+
+\lstset{language=C++,title=C++ template}
+\lstinputlisting{rw.cpp}
+
+Results:
+\lstset{language=c++,title=R output}
+\begin{lstlisting}
+<<echo=false,results=tex>>=
+summary(ans,"fixed")
+@ 
+\end{lstlisting}
+
+\begin{figure}[h]
+  \centering
+<<echo=false,results=hide,fig=true>>=
+matplot(d,type="l",las=1,lty=1,xlab="Time",ylab="Simulated states and estimated states")
+matpoints(t(pl$X),type="l",col="blue",lwd=2,lty=1)
+@ 
+\caption{Simulated $\mb{X}$ and prediction $\mb{\hat X}$ (blue lines).}
+\label{fig:2}
+\end{figure}
+
+Utilizing the sparseness of the Hessian wrt. to the random effects
+i.e. $\nabla^2_{\mb{X}} l(\mb{X},\mb{Y})$, can greatly speed up
+calculations of the Laplace appoximation.
+TMB automatically detects the sparseness pattern:
+
+\begin{figure}[h]
+  \centering
+<<echo=false,results=hide,fig=true>>=
+h <- obj$env$spHess(random=TRUE)
+print(image(h))
+@  
+  \caption{Auto-detected sparseness pattern of random effect Hessian
+    from the state-space example.}
+  \label{fig:3}
+\end{figure}
+

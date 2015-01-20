@@ -1,0 +1,25 @@
+To illustrate the principles we start out simple with a linear
+regression of $n$ measurements $Y_i$ on $x_i$
+\[Y_i=a+bx_i+\varepsilon_i\:,\:\:\:\varepsilon_i\sim N(0,\sigma^2)\]
+with three unknown parameters $a$, $b$ and $\sigma^2$.
+The likelihood function is compactly represented by the following
+template specifying the data objects, parameter objects and finally
+how to calculate the negative log likelihood (line 13). 
+
+\lstset{language=c++,title=C++ template}
+\lstinputlisting{linreg.cpp}
+
+\lstset{language=C++,title=Control template from R}
+\lstinputlisting{linreg.R}
+
+<<echo=false,results=hide>>=
+ans <- source("linreg.R")$value
+@
+
+
+\lstset{language=c++,title=R output}
+\begin{lstlisting}
+<<echo=false,results=tex>>=
+summary(ans,"fixed")
+@ 
+\end{lstlisting}

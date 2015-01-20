@@ -1,0 +1,192 @@
+\documentclass[largefonts]{sciposter}
+\usepackage{Sweave}
+% \DefineVerbatimEnvironment{Sinput}{Verbatim} {xleftmargin=2em,
+%                                               frame=single}
+% \DefineVerbatimEnvironment{Soutput}{Verbatim}{xleftmargin=2em,
+%                                               frame=single}
+
+\usepackage{listings}
+%\usepackage{epsfig}
+% \lstnewenvironment{code}[1][]%
+%   {\minipage{\linewidth} 
+%    \lstset{basicstyle=\ttfamily\footnotesize,frame=single,#1}}
+%   {\endminipage}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multicol}
+% \usepackage{namedplus}
+
+%\usepackage{fancybullets}
+
+\newcommand{\imsize}{0.45\columnwidth}
+
+\newtheorem{Def}{Definition}
+\newcommand{\mb}[1]{\mathbf{#1}}
+
+%\setkeys{Gin}{width=0.3\textwidth}
+
+%\definecolor{BoxCol}{rgb}{0.9,0.9,0.9}
+% uncomment for grey background to \section boxes 
+% for use with default option boxedsections
+
+% \definecolor{mainCol}{rgb}{0.9,1,1}
+\definecolor{BoxCol}{rgb}{0.9,0.9,1}
+% uncomment for light blue background to \section boxes 
+% for use with default option boxedsections
+
+\definecolor{SectionCol}{rgb}{0,0,0.5}
+% uncomment for dark blue \section text 
+
+%% ==================== lst colors
+%\lstset{numbers=left, stepnumber=2, frame=single,}
+%\lstset{frame=shadowbox, rulesepcolor=\color{blue}, backgroundcolor=\color{white},basicstyle=\footnotesize}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=t,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=c++,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  %title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+
+\title{Template Model Builder (TMB)}
+
+% Note: only give author names, not institute
+\author{Kasper Kristensen, Anders Nielsen, Casper Berg, Hans Skaug and Brad Bell}
+ 
+% insert correct institute name
+\institute{DTU Compute, DTU Aqua, University of Bergen, IHME UW}
+\email{kaskr@imm.dtu.dk}  % shows author email address below institute
+
+%\date is unused by the current \maketitle
+
+
+% The following commands can be used to alter the default logo settings
+
+%\leftlogo[0.8]{Uffe-Thygesen-001-snip}
+%\leftlogo[0.8]{DTU_logo_large}
+% defines logo to left of title (with scale factor)
+\rightlogo[0.52]{DTU_logo_large}  % same but on right
+
+% NOTE: This will require presence of files logoWenI.eps and RuGlogo.eps, 
+% or other supported format in the current directory  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Begin of Document
+
+
+
+\begin{document}
+%define conference poster is presented at (appears as footer)
+
+\conference{{\bf DSTS November 2013}}
+
+%\LEFTSIDEfootlogo  
+% Uncomment to put footer logo on left side, and 
+% conference name on right side of footer
+
+% Some examples of caption control (remove % to check result)
+
+%\renewcommand{\algorithmname}{Algoritme} % for Dutch
+
+%\renewcommand{\mastercapstartstyle}[1]{\textit{\textbf{#1}}}
+%\renewcommand{\algcapstartstyle}[1]{\textsc{\textbf{#1}}}
+%\renewcommand{\algcapbodystyle}{\bfseries}
+%\renewcommand{\thealgorithm}{\Roman{algorithm}}
+
+\maketitle
+
+%%% Begin of Multicols-Enviroment
+\begin{multicols}{3}
+
+%%% Abstract
+
+%\begin{abstract}
+
+\section*{Summary}
+TMB is a tool, that allows a user to quickly implement complex random
+effect models through simple c++ templates. It is implemented as an
+open source R package with functionality similar to the established tool AD Model Builder
+(admb-project.org). The user implements the model in terms of the
+joint distribution of random and fixed effects. Given such an
+implementation -- here referred to as a \emph{template} -- TMB carries
+out a Laplace approximation of the marginal likelihood function with
+exact derivatives obtained through automatic differentiation. TMB is
+designed be to fast for problems with many random effects
+($\approx 10^6$) and fixed effects ($\approx 10^3$).
+
+\section{Key features}
+\begin{itemize}
+  \item Combines established high performance libraries: CppAD, Eigen, CHOLMOD
+  \item Implements Laplace approximation for random effects with exact derivatives.
+  \item C++ Template based with R-like syntax
+  \item Automatic sparseness detection
+  \item Parallelism through BLAS
+  \item Parallel user templates
+  \item Parallelism through R's \texttt{multicore} package 
+\end{itemize}
+
+\section{Applications}
+Problems that can be solved using TMB include
+\begin{itemize}
+\item Non-linear mixed effect modelling
+\item State-space modelling
+\item Linear or non-linear filtering
+\item Missing data problems
+\item Time series analysis
+\item Space time modelling
+
+\item SDEs and SPDEs
+\item Big data
+\end{itemize}
+and more.
+
+
+%\textbf{We show examples of templates for three selected models.}
+
+
+
+\section{Example: Linear regression}
+\input{linreg.tex}
+
+\section{Example: Multivariate state space model}
+\input{rw.tex}
+
+\section{Conclusion}
+TMB is a highly flexible and efficient tool for statisticians working
+with non-standard model development. This poster has only demonstrated
+close to trivial applications: The state-space model with 300 states
+took 0.3 seconds to run including maximum likelihood estimation of
+fixed effects and prediction of the latent state variables; A wide
+range of examples are available on the project hosting site (www.github.com/kaskr/adcomp).\\
+TMB has been tested to work on common platforms: Linux, Mac OSX and
+Windows.
+
+\end{multicols}
+\end{document}
+
