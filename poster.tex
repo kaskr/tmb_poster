@@ -17,7 +17,6 @@
 \usepackage{amssymb}
 \usepackage{multicol}
 % \usepackage{namedplus}
-
 %\usepackage{fancybullets}
 
 \newcommand{\imsize}{0.45\columnwidth}
@@ -74,6 +73,78 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  SYNTAX
+%% \lstset{language=C++,
+%%   backgroundcolor=\color{lgrey},
+%%   basicstyle=\tiny\ttfamily,
+%%   keywordstyle=\color{blue}\ttfamily,
+%%   stringstyle=\color{red}\ttfamily,
+%%   commentstyle=\color{green}\ttfamily,
+%%   morecomment=[l][\color{magenta}]{\#},
+%%   morekeywords={Type}
+%% }
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{dred}{rgb}{0.545,0,0}
+\definecolor{dblue}{rgb}{0,0,0.545}
+\definecolor{lgrey}{rgb}{0.9,0.9,0.9}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\lstdefinelanguage{cpp}{
+  backgroundcolor=\color{lgrey},
+  %% basicstyle=\footnotesize \ttfamily \color{black} \bfseries,   
+  basicstyle=\scriptsize \ttfamily \color{black} \bfseries,   
+  breakatwhitespace=false,       
+  breaklines=true,               
+  captionpos=t,                   
+  commentstyle=\color{dkgreen},   
+  deletekeywords={...},          
+  escapeinside={\%*}{*)},                  
+  frame=single,                  
+  language=C++,                
+  %%keywordstyle=\color{purple},  
+  morekeywords={Type,vector,matrix,array}, 
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},      
+  %% numbers=right,                 
+  %% numbersep=5pt,                  
+  %% numberstyle=\tiny\color{black}, 
+  rulecolor=\color{black},        
+  showspaces=false,               
+  showstringspaces=false,        
+  showtabs=false,                
+  stepnumber=1,                   
+  tabsize=5,                     
+  title=\lstname,                 
+}
+\lstdefinelanguage{myR}{
+  backgroundcolor=\color{lgrey},
+  %% basicstyle=\footnotesize \ttfamily \color{black} \bfseries,   
+  basicstyle=\scriptsize \ttfamily \color{black} \bfseries,   
+  breakatwhitespace=false,       
+  breaklines=true,               
+  captionpos=t,                   
+  commentstyle=\color{dkgreen},   
+  deletekeywords={...},          
+  escapeinside={\%*}{*)},                  
+  frame=single,                  
+  language=R,                
+  %%keywordstyle=\color{purple},  
+  keywordstyle=\color{black},  
+  %% morekeywords={Type,vector,matrix,array}, 
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},      
+  %% numbers=right,                 
+  %% numbersep=5pt,                  
+  %% numberstyle=\tiny\color{black}, 
+  rulecolor=\color{black},        
+  showspaces=false,               
+  showstringspaces=false,        
+  showtabs=false,                
+  stepnumber=1,                   
+  tabsize=5,                     
+  title=\lstname,                 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SYNTAX
 
 \title{Template Model Builder (TMB)}
 
@@ -82,7 +153,7 @@
  
 % insert correct institute name
 \institute{DTU Compute, DTU Aqua, University of Bergen, IHME UW}
-\email{kaskr@imm.dtu.dk}  % shows author email address below institute
+\email{kaskr@dtu.dk}  % shows author email address below institute
 
 %\date is unused by the current \maketitle
 
@@ -104,7 +175,7 @@
 \begin{document}
 %define conference poster is presented at (appears as footer)
 
-\conference{{\bf DSTS November 2013}}
+\conference{{\bf NBBC15 and amlgm2015}}
 
 %\LEFTSIDEfootlogo  
 % Uncomment to put footer logo on left side, and 
@@ -130,7 +201,7 @@
 
 \section*{Summary}
 TMB is a tool, that allows a user to quickly implement complex random
-effect models through simple c++ templates. It is implemented as an
+effect models through simple C++ templates. It is implemented as an
 open source R package with functionality similar to the established tool AD Model Builder
 (admb-project.org). The user implements the model in terms of the
 joint distribution of random and fixed effects. Given such an
@@ -142,7 +213,7 @@ designed be to fast for problems with many random effects
 
 \section{Key features}
 \begin{itemize}
-  \item Combines established high performance libraries: CppAD, Eigen, CHOLMOD
+  \item Combines established high performance libraries: \\ CppAD, Eigen, CHOLMOD
   \item Implements Laplace approximation for random effects with exact derivatives.
   \item C++ Template based with R-like syntax
   \item Automatic sparseness detection
@@ -160,11 +231,8 @@ Problems that can be solved using TMB include
 \item Missing data problems
 \item Time series analysis
 \item Space time modelling
-
-\item SDEs and SPDEs
-\item Big data
+\item SDEs and SPDEs (R-INLA precision matrices can be used as building blocks)
 \end{itemize}
-and more.
 
 
 %\textbf{We show examples of templates for three selected models.}
@@ -183,10 +251,8 @@ with non-standard model development. This poster has only demonstrated
 close to trivial applications: The state-space model with 300 states
 took 0.3 seconds to run including maximum likelihood estimation of
 fixed effects and prediction of the latent state variables; A wide
-range of examples are available on the project hosting site (www.github.com/kaskr/adcomp).\\
-TMB has been tested to work on common platforms: Linux, Mac OSX and
-Windows.
-
+range of examples are available on the project hosting site \textbf{tmb-project.org}.\\
+TMB works on the common platforms Linux, \mbox{Mac OS X} and Windows.
 \end{multicols}
 \end{document}
 

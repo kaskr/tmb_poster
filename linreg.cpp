@@ -10,7 +10,7 @@ Type objective_function<Type>::operator() ()
   PARAMETER(b);
   PARAMETER(logSigma);
   // Procedure section
-  Type nll=-sum(dnorm(Y,a+b*x,exp(logSigma),true));
+  Type nll = -sum(dnorm(Y, a + b * x, exp(logSigma), true));
   return nll;
 }
 

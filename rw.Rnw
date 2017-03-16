@@ -18,18 +18,25 @@ ans <- source("rw.R")$value
 
 TMB needs an implementation of the negative log of the joint density
 of random effects and data $l(\mb{X},\mb{Y})$. This is in general just as easy as writing
-a procedure to simulate from the full model.
+a procedure to simulate from the full model:
+\begin{minipage}{\columnwidth}
+\lstinputlisting[language=cpp,title=C++ template]{rw.cpp}
+\end{minipage}
 
-\lstset{language=C++,title=C++ template}
-\lstinputlisting{rw.cpp}
+\begin{minipage}{\columnwidth}
+The template is controlled from R, now specifying that $\mb{X}$ is a latent variable:
+\lstinputlisting[language=myR,title=R code]{rw_short.R}
+\end{minipage}
 
+\begin{minipage}{\columnwidth}
 Results:
-\lstset{language=c++,title=R output}
+%\lstset{language=myR,title=R output}
 \begin{lstlisting}
 <<echo=false,results=tex>>=
 summary(ans,"fixed")
 @ 
 \end{lstlisting}
+\end{minipage}
 
 \begin{figure}[h]
   \centering
@@ -41,16 +48,16 @@ matpoints(t(pl$X),type="l",col="blue",lwd=2,lty=1)
 \label{fig:2}
 \end{figure}
 
-Utilizing the sparseness of the Hessian wrt. to the random effects
-i.e. $\nabla^2_{\mb{X}} l(\mb{X},\mb{Y})$, can greatly speed up
-calculations of the Laplace appoximation.
+Sparseness of the Hessian wrt. to the random effects
+i.e. $\nabla^2_{\mb{X}} l(\mb{X},\mb{Y})$, is used to speed up
+the Laplace appoximation.
 TMB automatically detects the sparseness pattern:
 
 \begin{figure}[h]
   \centering
 <<echo=false,results=hide,fig=true>>=
 h <- obj$env$spHess(random=TRUE)
-print(image(h))
+print(Matrix:::image(h))
 @  
   \caption{Auto-detected sparseness pattern of random effect Hessian
     from the state-space example.}

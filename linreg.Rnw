@@ -4,22 +4,25 @@ regression of $n$ measurements $Y_i$ on $x_i$
 with three unknown parameters $a$, $b$ and $\sigma^2$.
 The likelihood function is compactly represented by the following
 template specifying the data objects, parameter objects and finally
-how to calculate the negative log likelihood (line 13). 
-
-\lstset{language=c++,title=C++ template}
-\lstinputlisting{linreg.cpp}
-
-\lstset{language=C++,title=Control template from R}
-\lstinputlisting{linreg.R}
+how to calculate the negative log likelihood (line 13):
+\begin{minipage}{\columnwidth}
+\lstinputlisting[language=cpp, title=C++ template]{linreg.cpp}
+\end{minipage}
+\begin{minipage}{\columnwidth}
+The template is controlled from R:
+\lstinputlisting[language=myR,title=R code]{linreg.R}
+\end{minipage}
 
 <<echo=false,results=hide>>=
 ans <- source("linreg.R")$value
 @
 
-
-\lstset{language=c++,title=R output}
+%\lstset{language=myR,title=R output}
+\begin{minipage}{\columnwidth}
+Output:
 \begin{lstlisting}
 <<echo=false,results=tex>>=
 summary(ans,"fixed")
 @ 
 \end{lstlisting}
+\end{minipage}
